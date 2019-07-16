@@ -1,0 +1,24 @@
+steps:
+- name: '${_SOURCE}/gcloud'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+        gcloud source repos clone --verbosity=none `gcloud source \
+        repos list --limit=1 --format 'value(REPO_NAME)'` .io
+        find .io -type f -name gcloud.env -exec bash {} $BUILD_ID \
+        $PROJECT_ID $REPO_NAME $BRANCH_NAME $TAG_NAME \;
+        
+- name: '${_SOURCE}/docker'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+        find .io -type f -name docker.env -exec bash {} $BUILD_ID \
+        $PROJECT_ID $REPO_NAME $BRANCH_NAME $TAG_NAME \;
+
+substitutions:
+  _VERSION: 'v1-122015-cron'
+  _SOURCE: gcr.io/cloud-builders
+
+timeout: '60s'
