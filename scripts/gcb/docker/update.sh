@@ -57,8 +57,10 @@ cd $HOME && rm -rf $REPO
 git clone $ORIGIN && cd $REPO
 [ `git rev-parse --abbrev-ref HEAD` != master ] && git checkout master
 
-SHOW=`git branch | grep -w chetabahana`
-[ $? = 0 ] && git branch -D chetabahana
+for i in Chetabahana chetabahana; do
+SHOW=`git branch | grep -w $i`
+[ $? = 0 ] && git branch -D $i
+done
 
 git remote add upstream $UPSTREAM
 git pull --rebase upstream master
