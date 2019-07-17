@@ -56,9 +56,11 @@ UPSTREAM=https://github.com/mirumee/saleor.git
 cd $HOME && rm -rf $REPO
 git clone $ORIGIN && cd $REPO
 
-git checkout master
-git remote add upstream $UPSTREAM
+#delete all branches except master 
+git branch | grep -v "master" | xargs git branch -D
+[ `git rev-parse --abbrev-ref HEAD` != master ] && git checkout master
 
+git remote add upstream $UPSTREAM
 git pull --rebase upstream master
 git reset --hard upstream/master
 
