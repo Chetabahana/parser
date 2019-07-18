@@ -57,10 +57,17 @@ cd $HOME && rm -rf $REPO
 git clone $ORIGIN && cd $REPO
 [ `git rev-parse --abbrev-ref HEAD` != master ] && git checkout master
 
-for i in Chetabahana chetabahana; do
-SHOW=`git branch | grep -w $i`
-if [ $? = 0 ]; then git push origin --delete $i; fi
-git push origin --delete $i
+for i in Chetabahana chetabahana demo; do
+if grep -Fqe $i << EOF
+`git branch`
+EOF
+then
+   echo "branch exist: $i"
+   echo "git push origin --delete $i"
+   sleep 5
+else
+   echo "branch not exist: $i"
+fi
 done
 
 git remote add upstream $UPSTREAM
