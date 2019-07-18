@@ -50,14 +50,15 @@ echo "\n$hr\nREMOVE\n$hr"
 cd $HOME/Tutorial-Buka-Toko
 CF_BUILD_INITIATOR=chetabahana
 
-LOWER=`echo -e "${CF_BUILD_INITIATOR}" | sed -r 's/\<./\L&/g'`
-FIRST=`echo -e "$LOWER" | sed -r 's/\<./\U&/g'`
+LOWER=`echo "${CF_BUILD_INITIATOR}" | sed -r 's/\<./\L&/g'`
+FIRST=`echo "$LOWER" | sed -r 's/\<./\U&/g'`
 
 for i in $LOWER $FIRST demo; do
 if grep -Fqe $i << EOF
 `git show-branch --all`
 EOF
 then
+   echo "git branch -D $i"
    echo "git push origin --delete $i"
    sleep 5
 fi
