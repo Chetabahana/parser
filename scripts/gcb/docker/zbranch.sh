@@ -48,7 +48,12 @@ END
 
 echo "\n$hr\nREMOVE\n$hr"
 cd $HOME/Tutorial-Buka-Toko
-for i in chetabahana demo; do
+CF_BUILD_INITIATOR=chetabahana
+
+LOWER=`echo -e "${CF_BUILD_INITIATOR}" | sed -r 's/\<./\L&/g'`
+FIRST=`echo -e "$LOWER" | sed -r 's/\<./\U&/g'`
+
+for i in $LOWER $FIRST demo; do
 if grep -Fqe $i << EOF
 `git show-branch --all`
 EOF
