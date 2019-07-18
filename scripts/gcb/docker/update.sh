@@ -58,9 +58,6 @@ git clone $ORIGIN && cd $REPO
 [ `git rev-parse --abbrev-ref HEAD` != master ] && git checkout master
 
 for i in chetabahana demo; do
-git show-branch --all
-git fetch origin
-git branch -r --contains $i
 if grep -Fqe $i << EOF
 `git show-branch --all`
 EOF
