@@ -60,7 +60,7 @@ git clone $ORIGIN && cd $REPO
 for i in Chetabahana chetabahana; do
 SHOW=`git branch | grep -w $i`
 [ $? = 0 ] && git branch -D $i
-sleep 5
+sleep 10
 done
 
 git remote add upstream $UPSTREAM
