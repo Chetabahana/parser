@@ -46,21 +46,15 @@ concept guides. See 'git help <command>' or 'git help <concept>'
 to read about a specific subcommand or concept.
 END
 
-echo "\n$hr\nUPSTREAM\n$hr"
+echo "\n$hr\nREMOVE\n$hr"
+cd $HOME/Tutorial-Buka-Toko
+for i in chetabahana demo; do
+if grep -Fqe $i << EOF
+`git show-branch --all`
+EOF
+then
+   echo "git push origin --delete $i"
+   sleep 5
+fi
+done
 
-USER=MarketLeader
-REPO=Tutorial-Buka-Toko
-ORIGIN=$GIT/$USER/$REPO.git
-UPSTREAM=https://github.com/mirumee/saleor.git
-
-cd $HOME && rm -rf $REPO
-git clone $ORIGIN && cd $REPO
-[ `git rev-parse --abbrev-ref HEAD` != master ] && git checkout master
-
-git remote add upstream $UPSTREAM
-git pull --rebase upstream master
-git reset --hard upstream/master
-
-[ $BRANCH_NAME != 'master' ] && return
-git push origin master --force
-git status
