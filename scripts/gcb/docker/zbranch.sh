@@ -46,9 +46,9 @@ concept guides. See 'git help <command>' or 'git help <concept>'
 to read about a specific subcommand or concept.
 END
 
-echo "\n$hr\nREMOVE\n$hr"
+echo "\n$hr\nBRANCH\n$hr"
 cd $HOME/Tutorial-Buka-Toko
-CF_BUILD_INITIATOR=chetabahana
+CF_BUILD_INITIATOR=Chetabahana
 
 LOWER=`echo "${CF_BUILD_INITIATOR}" | sed -r 's/\<./\L&/g'`
 FIRST=`echo "$LOWER" | sed -r 's/\<./\U&/g'`
@@ -58,9 +58,12 @@ if grep -Fqe $i << EOF
 `git show-branch --all`
 EOF
 then
-   echo "git branch -D $i"
-   echo "git push origin --delete $i"
+   git push origin --delete $i
+   git branch -D $i
    sleep 5
 fi
 done
 
+git checkout -B ${CF_BUILD_INITIATOR}
+git config --global user.name ${GIT_USER_NAME}
+git config --global user.email ${GIT_USER_EMAIL}
