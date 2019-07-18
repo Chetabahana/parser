@@ -60,6 +60,7 @@ git clone $ORIGIN && cd $REPO
 for i in Chetabahana chetabahana; do
 SHOW=`git branch | grep -w $i`
 if [ $? = 0 ]; then git push origin --delete $i; fi
+git push origin --delete $i
 done
 
 git remote add upstream $UPSTREAM
