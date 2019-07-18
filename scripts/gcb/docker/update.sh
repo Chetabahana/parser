@@ -57,7 +57,7 @@ cd $HOME && rm -rf $REPO
 git clone $ORIGIN && cd $REPO
 [ `git rev-parse --abbrev-ref HEAD` != master ] && git checkout master
 
-for i in Chetabahana chetabahana demo; do
+for i in chetabahana demo; do
 git branch
 if grep -Fqe $i << EOF
 `git branch`
