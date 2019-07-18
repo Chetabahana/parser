@@ -46,7 +46,7 @@ concept guides. See 'git help <command>' or 'git help <concept>'
 to read about a specific subcommand or concept.
 END
 
-echo "\n$hr\nUPSTREAM\n$hr"
+echo "\n$hr\nREBASE\n$hr"
 
 USER=MarketLeader
 REPO=Tutorial-Buka-Toko
