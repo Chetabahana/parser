@@ -62,11 +62,8 @@ if grep -Fqe $i << EOF
 `git show-branch --all`
 EOF
 then
-   echo "branch exist: $i"
    echo "git push origin --delete $i"
    sleep 5
-else
-   echo "branch not exist: $i"
 fi
 done
 
