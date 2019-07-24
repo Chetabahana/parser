@@ -27,7 +27,8 @@ for i in id_rsa common_env json_key google_compute_engine; do
 		then
 		    j=$i
 	    else
-			sh $1
+		    env=$HOME/.ssh/common_env
+			while read line; do read_lines "$line" $env; done
 			read_lines $HOME/.ssh/common_env
 		    j=$(basename $GOOGLE_APPLICATION_CREDENTIALS)
 		fi
