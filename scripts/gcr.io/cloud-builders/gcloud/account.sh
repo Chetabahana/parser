@@ -21,6 +21,7 @@ fi
 
 # Account credentials
 #JSON_KEY=$(basename $GOOGLE_APPLICATION_CREDENTIALS)
+echo google is $GOOGLE_APPLICATION_CREDENTIALS
 for i in id_rsa json_key common_env google_compute_engine; do
 	if [ -f $HOME/.ssh/$i.enc ]  
 	then
