@@ -27,7 +27,8 @@ for i in id_rsa common_env json_key google_compute_engine; do
 		then
 		    j=$i
 	    else
-		    read_lines $HOME/.ssh/common_env
+		    source $init
+			read_lines $HOME/.ssh/common_env
 		    j=$(basename $GOOGLE_APPLICATION_CREDENTIALS)
 		fi
 		gcloud kms decrypt \
