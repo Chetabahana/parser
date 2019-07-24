@@ -1,11 +1,11 @@
 #!/bin/sh
 
 echo "\n$hr\nREBASE\n$hr"
-
+printenv
 USER=MarketLeader
 REPO=Tutorial-Buka-Toko
 UPSTREAM=https://github.com/mirumee/saleor.git
-echo origin is $ORIGIN
+
 cd $HOME && rm -rf $REPO
 git clone $ORIGIN && cd $REPO
 [ `git rev-parse --abbrev-ref HEAD` != master ] && git checkout master
