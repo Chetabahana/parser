@@ -27,10 +27,11 @@ for i in id_rsa common_env json_key google_compute_engine; do
 		then
 		    j=$i
 	    else
-		    env=$HOME/.ssh/common_env
-			while read line; do read_lines "$line" $env; done
-			read_lines $HOME/.ssh/common_env
-		    j=$(basename $GOOGLE_APPLICATION_CREDENTIALS)
+			while read -r line; do
+				var=`echo $line | cut -d '=' -f1`; test=$(echo $var)
+				if [ -z "$(test)" ];then eval export "$line";fi
+			done <$HOME/.ssh/common_env
+			j=$(basename $GOOGLE_APPLICATION_CREDENTIALS)
 		fi
 		gcloud kms decrypt \
 		--keyring my-keyring --key $i \
