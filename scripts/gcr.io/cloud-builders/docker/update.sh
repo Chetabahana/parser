@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo "\n$hr\nREBASE\n$hr"
-printenv
+
 USER=MarketLeader
 REPO=Tutorial-Buka-Toko
 UPSTREAM=https://github.com/mirumee/saleor.git
