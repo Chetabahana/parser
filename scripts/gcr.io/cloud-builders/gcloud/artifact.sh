@@ -13,7 +13,6 @@ echo "$hr\nSSH FILES\n$hr"
 ls -lL /root/.ssh
 
 echo "\n$hr\nENVIRONTMENT\n$hr"
-export ORIGIN=$GIT_URL@github.com/${CF_REPO_OWNER}/${CF_REPO_NAME}.git
 HR=$hr && unset hr
 HRD=$hrd && unset hrd
 printenv | sort
