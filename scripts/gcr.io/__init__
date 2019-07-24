@@ -18,7 +18,7 @@ run_script() {
     read_lines $HOME/.ssh/common_env
     # Calling..
     echo -e "$hrd\nRUN SCRIPT:\n$1\n$hr"
-    sh $1; rm -f .io/$1;
+    sh $1 $2; rm -f .io/$1;
 }
 
 # Listing script files to run
@@ -32,7 +32,7 @@ list_files() {
 		ls -l $1 | grep ".sh" && echo -e "\n$hr\n"
 		# Running..
 		find $1 -type f -name '*.sh' | sort | \
-		while read file; do run_script "$file"; done
+		while read file; do run_script "$file" $2; done
 	else
         echo -e "No '$TYPE' scripts to run\n$hr"	
 	fi
