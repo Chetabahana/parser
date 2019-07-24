@@ -20,12 +20,14 @@ then
 fi
 
 # Account credentials
-for i in id_rsa common_env google_compute_engine; do
+JSON_KEY=`basename $GOOGLE_APPLICATION_CREDENTIALS`
+for i in id_rsa json_key common_env google_compute_engine; do
 	if [ -f $HOME/.ssh/$i.enc ]  
 	then
+		[ "$i" != "json_key" ] && j=$i }} j=$JSON_KEY
 		gcloud kms decrypt \
 		--keyring my-keyring --key $i \
-		--plaintext-file $HOME/.ssh/$i \
+		--plaintext-file $HOME/.ssh/$j \
 		--ciphertext-file $HOME/.ssh/$i.enc \
 		--location global
 	fi
