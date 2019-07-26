@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Adjust column numbers ('190') follow to your screen
-echo -v res %190s
-export hr=`echo '%s\n' "${res// /-}"`
-export hrd=`echo '%s\n' "${res// /=}"`
+printf -v res %190s
+export hr=`printf '%s\n' "${res// /-}"`
+export hrd=`printf '%s\n' "${res// /=}"`
 
 # Unmark the 2 line below to see all commands available
 #echo -e "\n$hr\nPATH COMMANDS\n$hr"
