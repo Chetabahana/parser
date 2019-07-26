@@ -1,20 +1,7 @@
 steps:
-- name: '${_SOURCE}/gcloud'
-  entrypoint: 'bash'
-  args:
-  - '-c'
-  - |
-        bash scripts/io.bash $BUILD_ID $PROJECT_ID \
-        $REPO_NAME $BRANCH_NAME $TAG_NAME ${_SOURCE} \;
+- name: 'chetabahana/gcloud-kms'
+  args: [$BUILD_ID, $PROJECT_ID, $REPO_NAME]
         
-- name: '${_SOURCE}/docker'
-  entrypoint: 'bash'
-  args:
-  - '-c'
-  - |
-        bash scripts/io.bash $BUILD_ID $PROJECT_ID \
-        $REPO_NAME $BRANCH_NAME $TAG_NAME ${_SOURCE} \;
-
 substitutions:
   _VERSION: 'v1-261650-cron'
   _SOURCE: gcr.io/cloud-builders

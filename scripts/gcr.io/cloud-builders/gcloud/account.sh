@@ -1,6 +1,9 @@
 #!/bin/sh
 
 # Account credentials
+BASE=${CF_VOLUME_PATH}/${ACCOUNT_PATH}/${CF_ACCOUNT}
+ln -s $BASE/.ssh $HOME/.ssh && ln -s $BASE/.gitconfig $HOME/.gitconfig     
+
 for i in id_rsa common_env google_compute_engine; do
 	if [ -f $HOME/.ssh/$i.enc ]  
 	then
