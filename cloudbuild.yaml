@@ -3,7 +3,7 @@ steps:
   args: [$BUILD_ID, $PROJECT_ID, $REPO_NAME]
         
 substitutions:
-  _VERSION: 'v1-291615-cron'
+  _VERSION: 'v1-292115-cron'
   _SOURCE: gcr.io/cloud-builders
 
 timeout: '100s'
