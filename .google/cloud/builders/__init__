@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Unmark the 2 line below to see all commands available
+#echo -e "\n$hr\nPATH COMMANDS\n$hr"
+#compgen -c | xargs which -a | sort
+
+# Adjust column numbers ('190') follow to your screen
+printf -v res %190s
+export hr=`printf '%s\n' "${res// /-}"`
+export hrd=`printf '%s\n' "${res// /=}"`
+
+# Built-in Environtment
+export BUILD_ID=${1}
+export PROJECT_ID=${2}
+export REPO_NAME=${3}
+export BRANCH_NAME=${4}
+export TAG_NAME=${5}
+
+# Name of current step
+[ -f steps.csv ] && date +%s >> steps.csv || gcloud builds \
+describe ${1} --format 'value(steps.name)' > steps.csv
+
+# Take the last word only
+BASENAME=$(basename $(head -n 1 steps.csv | cut -d ';' -f `wc -l < steps.csv`))
+BASENAME=${BASENAME##*-}; BASENAME=${BASENAME##*_};
+
+# Run scripts
+source .google/list_files
+DIR=`dirname ${0}`/$BASENAME
+for i in $DIR .io/$DIR; do read_files $i; done

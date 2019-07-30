@@ -1,0 +1,41 @@
+version: '1.0'
+stages:
+  - stage1
+steps:
+  read_cf:
+    title: 'cf info build'
+    image: codefresh/cli
+    commands:
+      - printenv | sort
+      - codefresh get build $CF_BUILD_ID
+      - rm -rf ${CF_VOLUME_PATH}/${CF_REPO_NAME} ${CF_VOLUME_PATH}/$WORKSPACE
+      - printf -v res %190s && cf_export hr=$(printf '%s\n' "${res// /-}") && cf_export hrd=$(printf '%s\n' "${res// /=}")
+
+  read_gcloud:
+    title: 'gcloud build'
+    image: chetabahana/google-kms
+    commands:
+      - echo $GCP_SA_KEY > google-app-creds.json
+      - export GOOGLE_APPLICATION_CREDENTIALS=$(realpath google-app-creds.json)
+      - gcloud auth activate-service-account $GCP_ACCOUNT --key-file=$GOOGLE_APPLICATION_CREDENTIALS --project=$CF_ACCOUNT
+      - gcloud source repos clone --verbosity=none `gcloud source repos list --limit=1 --format 'value(REPO_NAME)'` $WORKSPACE
+      - kms ${CF_BUILD_ID} ${CF_ACCOUNT} ${CF_REPO_NAME} ${CF_BRANCH} ${CF_HOST_NAME} \;
+
+  main_clone:
+    title: 'Python test'
+    stage: stage1
+    image: python:latest
+    commands:
+      - LOWER="`echo ${CF_REPO_OWNER} | tr '[:upper:]' '[:lower:]'`"
+      - cd ${CF_VOLUME_PATH} && git clone https://github.com/${CF_REPO_OWNER}/${CF_REPO_NAME}.git
+      - cd ${CF_VOLUME_PATH}/${CF_REPO_NAME} && git checkout -B ${CF_BUILD_INITIATOR} #&& git pull origin ${CF_BUILD_INITIATOR}
+      - BASE=${CF_VOLUME_PATH}/${ACCOUNT_PATH}/${CF_ACCOUNT} && ln -s $BASE/.ssh $HOME/.ssh && ln -s $BASE/.gitconfig $HOME/.gitconfig     
+      #- find ${CF_VOLUME_PATH}/${ACCOUNT_PATH}/$LOWER -type d -name ${CF_REPO_NAME} -exec cp -frpvT {} ${CF_VOLUME_PATH}/${CF_REPO_NAME} \;
+      - bash ${CF_VOLUME_PATH}/$WORKSPACE/scripts/io python ${CF_BUILD_ID} ${CF_ACCOUNT} ${CF_REPO_NAME} ${CF_BRANCH} ${CF_HOST_NAME} \;
+
+  git_docker:
+    title: 'Docker test'
+    stage: stage1
+    image: gcr.io/cloud-builders/docker
+    commands:
+      - BASE=${CF_VOLUME_PATH}/${ACCOUNT_PATH}/${CF_ACCOUNT} && ln -s $BASE/.ssh $HOME/.ssh && ln -s $BASE/.gitconfig $HOME/.gitconfig     
