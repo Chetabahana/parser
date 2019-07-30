@@ -2,7 +2,7 @@
 
 #Package
 #APP="gevent gunicorn"
-#DEV="gittle"
+DEV="gittle"
 
 #Error trap
 abort()
@@ -25,20 +25,20 @@ pip install --user pipenv
 
 echo "\n$hr\nDEFAULT\n$hr"
 pwd & ls -al
-#sed -i 's|.<|,<|g' Pipfile && sed -i 's|.>|,>|g' Pipfile
+sed -i 's|.<|,<|g' Pipfile && sed -i 's|.>|,>|g' Pipfile
 #[ -n "$APP" ] && pipenv install $APP || pipenv sync
 
 echo "\n$hr\nPIPFILE\n$hr"
 cat Pipfile
+
+echo "\n$hr\nDEV\n$hr"
+pipenv install $DEV --dev
 
 echo "\n$hr\nGRAPH\n$hr"
 pipenv graph
 
 echo "\n$hr\nCHECK\n$hr"
 pipenv check
-
-echo "\n$hr\nDEV\n$hr"
-pipenv install $DEV --dev
 
 echo "\n$hr\nBIN FILES\n$hr"
 VENV=`pipenv --venv`
