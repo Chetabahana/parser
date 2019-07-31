@@ -9,8 +9,15 @@ then
 	gcloud source repos clone --verbosity=none `gcloud source \
 	repos list --limit=1 --format 'value(REPO_NAME)'` .io
 	if [ $BRANCH_NAME != master ]
-	then
-	    cd .io && git checkout $BRANCH_NAME && cd ..
+    then
+		cd .io
+		if grep -q origin/$BRANCH_NAME << EOF
+`git branch -r`
+EOF
+		then
+			git checkout $BRANCH_NAME
+		fi
+		cd ..
     fi
 	find .io -type d -name $PROJECT_ID -exec cp -frpT {} $HOME \;
 fi
