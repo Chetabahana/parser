@@ -31,17 +31,13 @@ printenv | sort
 export hr=$HR
 export hrd=$HRD
 
-echo "\n$hr\nCLONE ORIGIN\n$hr"
-REPO=$(basename $ORIGIN .git)
-rm -rf $REPO && git clone $ORIGIN $REPO
-find .io -type d -name $REPO -exec cp -frpvT {} $REPO \;
-
 echo "\n$hr\nPIPENV\n$hr"
 pip install --upgrade pip
 pip install --upgrade setuptools
 pip install --user pipenv
 
 echo "\n$hr\nPIPFILE\n$hr"
+REPO=$(basename $ORIGIN .git)
 cd $REPO && cat Pipfile
 
 echo "\n$hr\nDEFAULT\n$hr"
