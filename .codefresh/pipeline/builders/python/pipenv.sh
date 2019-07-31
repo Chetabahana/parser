@@ -1,8 +1,8 @@
 #!/bin/sh
 
 #Package
-#APP="gevent gunicorn"
-#DEV="gittle"
+APP="gevent gunicorn"
+DEV="gittle"
 
 #Error trap
 abort()
@@ -25,13 +25,15 @@ printenv | sort
 export hr=$HR
 export hrd=$HRD
 
-git clone https://github.com/MarketLeader/Tutorial-Buka-Toko.git    
+echo "\n$hr\nCLONE ORIGIN\n$hr"
+git clone $ORIGIN   
 cd Tutorial-Buka-Toko
 
 echo "\n$hr\nPIPENV\n$hr"
 rm -rf $HOME/.local && mkdir $HOME/.local
 export PATH=$HOME/.local/bin:$PATH
-#pip install --upgrade pip
+pip install --upgrade pip
+pip install --upgrade setuptools
 pip install --user pipenv
 
 echo "\n$hr\nDEFAULT\n$hr"
