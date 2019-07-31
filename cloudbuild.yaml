@@ -16,7 +16,7 @@ steps:
         $REPO_NAME $BRANCH_NAME $TAG_NAME \;
 
 substitutions:
-  _VERSION: 'v1-010256-cron'
+  _VERSION: 'v1-010622-cron'
   _INIT: .google/cloud/builders/__init__
 
 timeout: '100s'
