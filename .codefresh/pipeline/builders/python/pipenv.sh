@@ -25,6 +25,10 @@ printenv | sort
 export hr=$HR
 export hrd=$HRD
 
+echo "\n$hr\nCLONE ORIGIN\n$hr"
+rm -rf $REPO_NAME && git clone $ORIGIN $REPO_NAME
+cd $REPO_NAME && git checkout $BRANCH_NAME
+
 echo "\n$hr\nPIPENV\n$hr"
 rm -rf $HOME/.local && mkdir $HOME/.local
 export PATH=$HOME/.local/bin:$PATH
@@ -33,7 +37,6 @@ pip install --upgrade setuptools
 pip install --user pipenv
 
 echo "\n$hr\nDEFAULT\n$hr"
-git clone $ORIGIN && cd $REPO_NAME && git checkout $BRANCH_NAME
 sed -i 's|.<|,<|g' Pipfile && sed -i 's|.>|,>|g' Pipfile
 [ -n "$APP" ] && pipenv install $APP || pipenv sync
 
