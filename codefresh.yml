@@ -7,16 +7,16 @@ steps:
     image: codefresh/cli
     commands:
       - printenv | sort
-      - rm -rf .io .root Toko-Chetabahana $CF_REPO_NAME
-      - cf_export INIT=branches/.codefresh/pipeline/builders/__init__ 
+      - rm -rf .io .root Cloud-Tasks-API $CF_REPO_NAME
+      - cf_export INIT=.codefresh/pipeline/builders/__init__ 
 
   read_gcloud:
     title: 'gcloud build'
     image: gcr.io/cloud-builders/gcloud
     commands:
-      - git clone https://github.com/MarketLeader/Toko-Chetabahana.git    
-      - cf_export WORKFLOW=$(realpath Toko-Chetabahana) && mkdir .root 
-      - bash Toko-Chetabahana/$INIT gcloud && cp -frpT /root .root
+      - git clone https://github.com/MarketLeader/Cloud-Tasks-API.git    
+      - cf_export WORKFLOW=$(realpath Cloud-Tasks-API) && mkdir .root 
+      - bash Cloud-Tasks-API/$INIT gcloud && cp -frpT /root .root
       - cf_export ROOT=$(realpath .root)
 
   main_clone:
