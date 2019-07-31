@@ -17,7 +17,3 @@ git reset --hard upstream/master
 [ $BRANCH_NAME != 'master' ] && return
 git push origin master --force
 git status
-
-#cd $REPO_NAME && git checkout -B Chetabahana && cd ..
-#LOWER="`echo ${CF_REPO_OWNER} | tr '[:upper:]' '[:lower:]'`"
-#find .io -type d -name $REPO_NAME -exec cp -frpvT {} $REPO_NAME \;
