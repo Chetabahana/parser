@@ -27,7 +27,7 @@ export hrd=$HRD
 
 echo "\n$hr\nCLONE ORIGIN\n$hr"
 rm -rf $REPO_NAME && git clone $ORIGIN $REPO_NAME
-cd $REPO_NAME && git checkout $BRANCH_NAME
+cd $REPO_NAME && git checkout Chetabahana
 
 echo "\n$hr\nPIPENV\n$hr"
 rm -rf $HOME/.local && mkdir $HOME/.local
