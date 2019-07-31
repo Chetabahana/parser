@@ -1,7 +1,6 @@
 #!/bin/sh
 
 #Package
-TAG="Chetabahana"
 APP="gevent gunicorn"
 DEV="gittle"
 
@@ -19,32 +18,31 @@ abort()
 trap 'abort' 0
 set -e
 
-echo "\n$hr\nENVIRONTMENT\n$hr"
-HR=$hr && unset hr
-HRD=$hrd && unset hrd
-printenv | sort
-export hr=$HR
-export hrd=$HRD
-
-echo "\n$hr\nCLONE ORIGIN\n$hr"
-rm -rf $REPO_NAME && git clone $ORIGIN $REPO_NAME && cd $REPO_NAME
-[ `git rev-parse --abbrev-ref HEAD` != $TAG ] && git checkout $TAG
-
-echo "\n$hr\nPIPENV\n$hr"
-rm -rf $HOME/.local && mkdir $HOME/.local
-export PATH=$HOME/.local/bin:$PATH
-
 apt-get -y update \
   && apt-get install -y gettext \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
+echo "\n$hr\nENVIRONTMENT\n$hr"
+HR=$hr && unset hr
+HRD=$hrd && unset hrd
+export PATH=$HOME/.local/bin:$PATH
+printenv | sort
+export hr=$HR
+export hrd=$HRD
+
+echo "\n$hr\nCLONE ORIGIN\n$hr"
+REPO=$(basename $ORIGIN .git)
+rm -rf $REPO && git clone $ORIGIN $REPO
+find .io -type d -name $REPO -exec cp -frpvT {} $REPO \;
+
+echo "\n$hr\nPIPENV\n$hr"
 pip install --upgrade pip
 pip install --upgrade setuptools
 pip install --user pipenv
 
 echo "\n$hr\nPIPFILE\n$hr"
-cat Pipfile
+cd $REPO && cat Pipfile
 
 echo "\n$hr\nDEFAULT\n$hr"
 sed -i 's|.<|,<|g' Pipfile && sed -i 's|.>|,>|g' Pipfile
