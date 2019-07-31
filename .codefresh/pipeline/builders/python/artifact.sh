@@ -19,6 +19,3 @@ ls -al /
 echo "\n$hr\nCURRENT REPOSITORY\n$hr"
 pwd
 ls -al .
-
-echo "\n$hr\nCF_VOLUME_PATH REPOSITORY\n$hr"
-ls -al ${CF_VOLUME_PATH}

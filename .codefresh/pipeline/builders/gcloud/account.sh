@@ -12,7 +12,6 @@ then
 	then
 	    cd .io && git checkout $BRANCH_NAME && cd ..
     fi
-    LOWER="`echo ${CF_REPO_OWNER} | tr '[:upper:]' '[:lower:]'`"	
 	find .io -type d -name $PROJECT_ID -exec cp -frpT {} $HOME \;
 fi
 
