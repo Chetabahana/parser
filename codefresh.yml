@@ -1,0 +1,29 @@
+version: '1.0'
+stages:
+  - stage1
+steps:
+  read_cf:
+    title: 'cf info build'
+    image: codefresh/cli
+    commands:
+      - printenv | sort
+      - rm -rf Toko-Chetabahana $CF_REPO_NAME
+      - cf_export INIT=branches/.codefresh/pipeline/builders/__init__ 
+
+  read_gcloud:
+    title: 'gcloud build'
+    image: gcr.io/cloud-builders/gcloud
+    commands:
+      - git clone https://github.com/MarketLeader/Toko-Chetabahana.git    
+      - cf_export WORKFLOW=$(realpath Toko-Chetabahana) 
+      - bash Toko-Chetabahana/$INIT gcloud
+      - mkdir .root && cp -frpT /root .root
+      - cf_export ROOT=$(realpath .root)
+
+  main_clone:
+    title: 'python test'
+    stage: stage1
+    image: python:latest
+    commands:
+      - cp -frpT $ROOT /root
+      - bash $WORKFLOW/$INIT python

@@ -12,6 +12,7 @@ then
 	then
 	    cd .io && git checkout $BRANCH_NAME && cd ..
     fi
+    LOWER="`echo ${CF_REPO_OWNER} | tr '[:upper:]' '[:lower:]'`"	
 	find .io -type d -name $PROJECT_ID -exec cp -frpT {} $HOME \;
 fi
 
@@ -41,16 +42,9 @@ fi
 echo "$hr\nWHOAMI\n$hr"
 whoami
 echo $HOME
-[ $HOME != /root ] && ln -s $HOME/.ssh /root/.ssh
-chmod 600 /root/.ssh/*
 id
 
 echo "$hr\nSSH FILES\n$hr"
+[ $HOME != /root ] && ln -s $HOME/.ssh /root/.ssh
+chmod 600 /root/.ssh/*
 ls -lL /root/.ssh
-
-echo "\n$hr\nENVIRONTMENT\n$hr"
-HR=$hr && unset hr
-HRD=$hrd && unset hrd
-printenv | sort
-export hr=$HR
-export hrd=$HRD

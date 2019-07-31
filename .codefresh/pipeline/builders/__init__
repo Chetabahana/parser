@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Unmark the 2 line below to see all commands available
+#echo -e "\n$hr\nPATH COMMANDS\n$hr"
+#compgen -c | xargs which -a | sort
+
+# Adjust column numbers ('190') follow to your screen
+printf -v res %190s
+export hr=`printf '%s\n' "${res// /-}"`
+export hrd=`printf '%s\n' "${res// /=}"`
+
+# Built-in Environtment
+export BUILD_ID=$CF_BUILD_ID
+export PROJECT_ID=$CF_ACCOUNT
+export REPO_NAME=$CF_REPO_NAME
+export BRANCH_NAME=$CF_BRANCH
+export TAG_NAME=$CF_STEP_NAME
+
+# Google App Credentials
+if [ -z $GOOGLE_APPLICATION_CREDENTIALS ]
+then
+    echo $GCP_SA_KEY > google-app-creds.json
+	KEY_FILE=$(realpath google-app-creds.json)
+	gcloud auth activate-service-account $GCP_ACCOUNT \
+	--key-file=$KEY_FILE --project=$PROJECT_ID
+    cf_export GOOGLE_APPLICATION_CREDENTIALS=$KEY_FILE
+fi
+
+# Run scripts
+DIR=`dirname ${0}`/${1}
+source Toko-Chetabahana/branches/.codefresh/list_files
+for i in $DIR .io/$DIR; do read_files $i; done
