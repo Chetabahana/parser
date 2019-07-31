@@ -24,7 +24,7 @@ run_script() {
 
 # Listing script files to run
 read_files() {
-	[[ $1 == *"io/scripts"* ]] && TYPE=CUSTOM || TYPE=COMMON
+	[[ $1 == *"io/"* ]] && TYPE=CUSTOM || TYPE=COMMON
 	echo -e "\n$hrd\n$TYPE SCRIPTS\n$hrd"
 	if ([ -d $1 ] && [ "$(ls -A $1)" ])
 	then

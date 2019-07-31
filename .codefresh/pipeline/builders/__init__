@@ -8,6 +8,7 @@
 printf -v res %190s
 export hr=`printf '%s\n' "${res// /-}"`
 export hrd=`printf '%s\n' "${res// /=}"`
+export PATH=$HOME/.local/bin:$PATH
 
 # Built-in Environtment
 export BUILD_ID=$CF_BUILD_ID

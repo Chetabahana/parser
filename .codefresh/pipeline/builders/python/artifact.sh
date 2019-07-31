@@ -33,4 +33,8 @@ rm -rf $FLOWNAME && git clone $FLOW_GIT
 cp -frpvT $WORKFLOW $REPO/.google
 
 echo "\n$hr\nORIGIN REPOSITORY\n$hr"
-ls -al $REPO
+cd $REPO && ls -al .
+
+ln -s $HOME/.ssh/push /bin/push
+chmod +x /bin/push
+push $ORIGIN
