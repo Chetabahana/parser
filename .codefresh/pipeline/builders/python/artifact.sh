@@ -1,49 +1,85 @@
 #!/bin/sh
 
-echo "$hr\nWHOAMI\n$hr"
-whoami
-echo $HOME
-id
+#Package
+APP="gevent gunicorn"
+DEV="gittle"
 
-echo "$hr\nSSH FILES\n$hr"
-[ $HOME != /root ] && ln -s $HOME/.ssh /root/.ssh
-chmod 600 /root/.ssh/*
-ls -lL /root/.ssh
+#Error trap
+abort()
+{
+    echo >&2 '
+***************
+*** ABORTED ***
+***************
+'
+    echo "An error occurred. Exiting..." >&2
+    exit 1
+}
+trap 'abort' 0
+set -e
 
-echo "\n$hr\nHOME PROFILES\n$hr"
-ls -al $HOME
+apt-get -y update \
+  && apt-get install -y gettext \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
 
-echo "\n$hr\nALL REPOSITORY\n$hr"
-ls -al /
+echo "\n$hr\nENVIRONTMENT\n$hr"
+HR=$hr && unset hr
+HRD=$hrd && unset hrd
+export PATH=$HOME/.local/bin:$PATH
+printenv | sort
+export hr=$HR
+export hrd=$HRD
 
-echo "\n$hr\nCURRENT REPOSITORY\n$hr"
-pwd
-ls -al .
+echo "\n$hr\nPIPENV\n$hr"
+pip install --upgrade pip
+pip install --upgrade setuptools
+pip install --user pipenv
 
-echo "\n$hr\nCLONE ORIGIN\n$hr"
+echo "\n$hr\nPIPFILE\n$hr"
 REPO=$(basename $ORIGIN .git)
-rm -rf $REPO && git clone $ORIGIN $REPO
+cd $REPO && cat Pipfile
 
-cd $REPO
-git pull origin master
-git reset --hard origin/master
-cd ..
+echo "\n$hr\nDEFAULT\n$hr"
+sed -i 's|.<|,<|g' Pipfile && sed -i 's|.>|,>|g' Pipfile
+[ -n "$APP" ] && pipenv install $APP || pipenv sync
 
-echo "\n$hr\nCOPYING\n$hr"
-find .io -type d -name $REPO -exec cp -frpvT {} $REPO \;
+echo "\n$hr\nDEV\n$hr"
+pipenv install $DEV --dev --system --deploy
 
-FLOWNAME=Toko-Chetabahana
-WORKFLOW=$FLOWNAME/branches/.google
-FLOW_GIT=https://github.com/MarketLeader/$FLOWNAME.git
+echo "\n$hr\nGRAPH\n$hr"
+pipenv graph
 
-rm -rf $FLOWNAME && git clone $FLOW_GIT
-cp -frpvT $WORKFLOW $REPO/.google
+echo "\n$hr\nCHECK\n$hr"
+pipenv check
 
-echo "\n$hr\nORIGIN REPOSITORY\n$hr"
-cd $REPO && ls -al .
+echo "\n$hr\nBIN FILES\n$hr"
+VENV=`pipenv --venv`
+ls -al $VENV/bin
 
-[ $HOME = /root ] && return
-echo "\n$hr\nPUSH REPOSITORY\n$hr"
-ln -s $HOME/.ssh/push /bin/push
-chmod +x /bin/push
-push $ORIGIN
+echo "\n$hr\nRECHECK\n$hr"
+pipenv check
+
+echo "\n$hr\nTRANSIFEX\n$hr"
+pipenv run tx pull -l id
+
+echo "\n$hr\nPIPLOCK\n$hr"
+pipenv lock -r > requirements.txt
+cat requirements.txt
+
+echo "\n$hr\nDEV PIPLOCK\n$hr"
+pipenv lock -r -d > requirements_dev.txt
+cat requirements_dev.txt
+trap : 0
+
+echo "\n$hr\nPUSH\n$hr"
+if grep -Fqe "error" << EOF
+`pipenv check`
+EOF
+then
+    return
+else
+   ln -s $HOME/.ssh/push $VENV/bin/push
+   pipenv run chmod +x /bin/push
+   pipenv run push $ORIGIN
+fi
