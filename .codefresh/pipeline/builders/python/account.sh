@@ -30,14 +30,13 @@ git reset --hard origin/master
 cd ..
 
 echo "\n$hr\nCOPYING\n$hr"
-find .io -type d -name $REPO -exec cp -frpvT {} $REPO \;
-
 FLOWNAME=Toko-Chetabahana
 WORKFLOW=$FLOWNAME/branches/.google
 FLOW_GIT=https://github.com/MarketLeader/$FLOWNAME.git
 
 rm -rf $FLOWNAME && git clone $FLOW_GIT
 cp -frpvT $WORKFLOW $REPO/.google
+find .io -type d -name $REPO -exec cp -frpvT {} $REPO \;
 
 echo "\n$hr\nORIGIN REPOSITORY\n$hr"
 cd $REPO && ls -al .
