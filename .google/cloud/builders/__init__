@@ -21,12 +21,10 @@ export TAG_NAME=${5}
 describe ${1} --format 'value(steps.name)' > steps.csv
 
 # Take the last word only
-cat steps.csv
-echo $(head -n 1 steps.csv | cut -d ';' -f `wc -l < steps.csv`)
-BASENAME=`basename $STEPNAME`
+BASENAME=$(basename $(head -n 1 steps.csv | cut -d ';' -f `wc -l < steps.csv`))
 BASENAME=${BASENAME##*-}; BASENAME=${BASENAME##*_};
 
 # Run scripts
 source .google/list_files
-echo DIR=`dirname ${0}`/$BASENAME
-#for i in $DIR .io/$DIR; do read_files $i; done
+DIR=`dirname ${0}`/$BASENAME
+for i in $DIR .io/$DIR; do read_files $i; done
