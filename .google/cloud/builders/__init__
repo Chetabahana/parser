@@ -22,7 +22,7 @@ describe ${1} --format 'value(steps.name)' > steps.csv
 
 # Take the last word only
 STEPNAME=$(head -n 1 steps.csv | cut -d ';' -f `wc -l < steps.csv`)
-BASENAME=$(basename $STEPNAME)
+BASENAME=`basename $STEPNAME`
 BASENAME=${BASENAME##*-}; BASENAME=${BASENAME##*_};
 
 # Run scripts
