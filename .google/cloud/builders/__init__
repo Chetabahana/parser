@@ -21,7 +21,7 @@ export TAG_NAME=${5}
 describe ${1} --format 'value(steps.name)' > steps.csv
 
 # Take the last word only
-STEPNAME=$(head -n 1 steps.csv | cut -d ';' -f `wc -l < steps.csv`)
+echo $(head -n 1 steps.csv | cut -d ';' -f `wc -l < steps.csv`)
 BASENAME=`basename $STEPNAME`
 BASENAME=${BASENAME##*-}; BASENAME=${BASENAME##*_};
 
