@@ -4,7 +4,7 @@ steps:
   args:
   - '-c'
   - |
-        echo ${_INIT} $BUILD_ID $PROJECT_ID \
+        bash ${_INIT} $BUILD_ID $PROJECT_ID \
         $REPO_NAME $BRANCH_NAME $TAG_NAME \;
         
 - name: 'gcr.io/cloud-builders/docker'
