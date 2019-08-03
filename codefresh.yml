@@ -6,23 +6,21 @@ steps:
     title: 'cf info build'
     image: codefresh/cli
     commands:
-      - printenv | sort
-      - rm -rf .io .root Cloud-Tasks-API $CF_REPO_NAME
-      - cf_export INIT=.google/cloud/builders/__init__ 
+      - REPO_TASK=Cloud-Tasks-API
+      - rm -rf .io .root $REPO_TASK $CF_REPO_NAME
+      - mkdir .root && cf_export ROOT=$(realpath .root)
+      - cf_export INIT=$REPO_TASK/.google/cloud/builders/__init__ 
+      - git clone https://github.com/MarketLeader/$REPO_TASK.git    
 
   read_gcloud:
     title: 'gcloud build'
     image: gcr.io/cloud-builders/gcloud
     commands:
-      - git clone https://github.com/MarketLeader/Cloud-Tasks-API.git    
-      - cf_export WORKFLOW=$(realpath Cloud-Tasks-API) && mkdir .root 
-      - bash Cloud-Tasks-API/$INIT gcloud && cp -frpT /root .root
-      - cf_export ROOT=$(realpath .root)
+      - bash $INIT gcloud && cp -frpT $HOME $ROOT
 
   main_clone:
     title: 'python test'
     stage: stage1
     image: python:latest
     commands:
-      - cp -frpT $ROOT /root
-      - bash $WORKFLOW/$INIT python
+      - cp -frpT $ROOT $HOME && bash $INIT python
