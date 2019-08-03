@@ -1,5 +1,12 @@
 #!/bin/sh
 
+echo "\n$hr\nENVIRONTMENT\n$hr"
+HR=$hr && unset hr
+HRD=$hrd && unset hrd
+printenv | sort
+export hr=$HR
+export hrd=$HRD
+
 echo "\n$hr\nSYSTEM INFO\n$hr"
 gcloud info
 
