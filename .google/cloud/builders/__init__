@@ -8,23 +8,26 @@
 printf -v res %190s
 export hr=`printf '%s\n' "${res// /-}"`
 export hrd=`printf '%s\n' "${res// /=}"`
+export PATH=$HOME/.local/bin:$PATH
 
 # Built-in Environtment
-export BUILD_ID=${1}
-export PROJECT_ID=${2}
-export REPO_NAME=${3}
-export BRANCH_NAME=${4}
-export TAG_NAME=${5}
+export BUILD_ID=$CF_BUILD_ID
+export PROJECT_ID=$CF_ACCOUNT
+export REPO_NAME=$CF_REPO_NAME
+export BRANCH_NAME=$CF_BRANCH
+export TAG_NAME=$CF_STEP_NAME
 
-# Name of current step
-[ -f steps.csv ] && date +%s >> steps.csv || gcloud builds \
-describe ${1} --format 'value(steps.name)' > steps.csv
-
-# Take the last word only
-BASENAME=$(basename $(head -n 1 steps.csv | cut -d ';' -f `wc -l < steps.csv`))
-BASENAME=${BASENAME##*-}; BASENAME=${BASENAME##*_};
+# Google App Credentials
+if [ -z $GOOGLE_APPLICATION_CREDENTIALS ]
+then
+    echo $GCP_SA_KEY > google-app-creds.json
+	KEY_FILE=$(realpath google-app-creds.json)
+	gcloud auth activate-service-account $GCP_ACCOUNT \
+	--key-file=$KEY_FILE --project=$PROJECT_ID
+    cf_export GOOGLE_APPLICATION_CREDENTIALS=$KEY_FILE
+fi
 
 # Run scripts
-source .google/list_files
-DIR=`dirname ${0}`/$BASENAME
+DIR=`dirname ${0}`/${1}
+source Cloud-Tasks-API/.codefresh/list_files
 for i in $DIR .io/$DIR; do read_files $i; done
