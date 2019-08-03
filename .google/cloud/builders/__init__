@@ -29,5 +29,5 @@ fi
 
 # Run scripts
 DIR=`dirname ${0}`/${1}
-source Cloud-Tasks-API/.codefresh/list_files
+source `echo $DIR | sed 's/\.google.*/.google/'`/list_files
 for i in $DIR .io/$DIR; do read_files $i; done
