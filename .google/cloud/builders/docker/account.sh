@@ -3,16 +3,15 @@
 echo "$hr\nWHOAMI\n$hr"
 whoami
 echo $HOME
-[ $HOME != /root ] && ln -s $HOME/.ssh /root/.ssh
-chmod 600 /root/.ssh/*
 id
 
 echo "$hr\nSSH FILES\n$hr"
+[ $HOME != /root ] && ln -s $HOME/.ssh /root/.ssh
+chmod 600 /root/.ssh/*
 ls -lL /root/.ssh
 
 if [ $PROJECT_ID = 'marketleader' ]  
 then 
-	export GIT=https://chetabahana:`cat $HOME/.ssh/github_token`@github.com
 	[ $REPO_NAME = 'Tutorial-Buka-Toko' ] && export BUILD='taxonomy'
 else
 	[ $BRANCH_NAME = 'master' ] && export tagname='chetabahana/branches'

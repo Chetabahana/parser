@@ -9,8 +9,8 @@ steps:
       - REPO_TASK=Cloud-Tasks-API
       - rm -rf .io .root $REPO_TASK $CF_REPO_NAME
       - mkdir .root && cf_export ROOT=$(realpath .root)
-      - cf_export INIT=$REPO_TASK/.google/cloud/builders/__init__ 
-      - git clone https://github.com/MarketLeader/$REPO_TASK.git    
+      - cf_export INIT=$REPO_TASK/.google/cloud/builders/__init__
+      - git clone https://github.com/MarketLeader/$REPO_TASK.git
 
   read_gcloud:
     title: 'gcloud build'

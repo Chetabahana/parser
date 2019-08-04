@@ -18,14 +18,14 @@ export BRANCH_NAME=${4}
 export TAG_NAME=${5}
 
 # Name of current step
-[ -f steps.csv ] && date +%s >> steps.csv || gcloud builds \
-describe ${1} --format 'value(steps.name)' > steps.csv
+[ -f .steps ] && date +%s >> .steps|| gcloud builds \
+describe ${1} --format 'value(steps.name)' > .steps
 
 # Take the last word only
-BASENAME=$(basename $(head -n 1 steps.csv | cut -d ';' -f `wc -l < steps.csv`))
-BASENAME=${BASENAME##*-}; BASENAME=${BASENAME##*_};
+BASENAME=$(basename $(head -n 1 .steps | cut -d ';' -f `wc -l < .steps`))
+BASENAME=${BASENAME%:*}; BASENAME=${BASENAME##*-}; BASENAME=${BASENAME##*_};
 
 # Run scripts
 DIR=`dirname ${0}`/builders/$BASENAME
-source `echo $DIR | sed 's/\.google.*/.google/'`/list_files
+source ${DIR%.google/*}.google/list_files
 for i in $DIR .io/$DIR; do read_files $i; done
