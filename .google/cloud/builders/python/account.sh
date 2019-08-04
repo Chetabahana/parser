@@ -28,6 +28,7 @@ cd $REPO
 git checkout master
 git branch -D Chetabahana
 git branch -m Chetabahana
+mv README.md README_original.md
 cd ..
 
 echo "\n$hr\nCOPYING\n$hr"
