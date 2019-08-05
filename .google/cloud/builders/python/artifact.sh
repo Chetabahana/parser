@@ -19,9 +19,9 @@ trap 'abort' 0
 set -e
 
 apt-get -y update \
-  && apt-get install -y gettext \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/*
+    && apt-get install -y gettext \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 echo "\n$hr\nENVIRONTMENT\n$hr"
 HR=$hr && unset hr
@@ -77,10 +77,10 @@ if grep -Fqe "error" << EOF
 `pipenv check`
 EOF
 then
-	return
+    return
 else
-	ln -s $HOME/.ssh/push $VENV/bin/push
-	pipenv run chmod +x /bin/push
-	pipenv run push $ORIGIN
-	git gc --aggressive --prune=all
+    ln -s $HOME/.ssh/push $VENV/bin/push
+    pipenv run chmod +x /bin/push
+    pipenv run push $ORIGIN
+    git gc --aggressive --prune=all
 fi

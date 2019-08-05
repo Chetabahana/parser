@@ -12,9 +12,9 @@ ls -lL /root/.ssh
 
 if [ $PROJECT_ID = 'marketleader' ]  
 then 
-	[ $REPO_NAME = 'Tutorial-Buka-Toko' ] && export BUILD='taxonomy'
+    [ $REPO_NAME = 'Tutorial-Buka-Toko' ] && export BUILD='taxonomy'
 else
-	[ $BRANCH_NAME = 'master' ] && export tagname='chetabahana/branches'
+    [ $BRANCH_NAME = 'master' ] && export tagname='chetabahana/branches'
 fi
 
 echo "\n$hr\nENVIRONTMENT\n$hr"
