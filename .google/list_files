@@ -13,8 +13,23 @@ read_lines() {
     fi
 }
 
+# Create symbolic links
+file_links() {
+    for f in $1/.*
+	do
+		if ( [ ! -f $2/${f##*/} ] && [ ! -d $2/${f##*/} ] && \
+		[ "${f##*/}" != "." ] && [ "${f##*/}" != ".." ] )
+		then
+			ln -s $f $2/${f##*/}
+		fi
+	done
+}
+
 # Running each scripts
 run_script() {
+    # Linking..
+	[ $HOME != /root ] && file_links $HOME /root
+	[ -d /root/.ssh ] && chmod 600 /root/.ssh/*
     # Looping..
     read_lines $HOME/.ssh/env_keys
     # Calling..

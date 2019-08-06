@@ -6,8 +6,6 @@ echo $HOME
 id
 
 echo "$hr\nSSH FILES\n$hr"
-[ $HOME != /root ] && ln -s $HOME/.ssh /root/.ssh
-chmod 600 /root/.ssh/*
 ls -lL /root/.ssh
 
 if [ $PROJECT_ID = 'marketleader' ]  

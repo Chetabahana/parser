@@ -6,8 +6,6 @@ echo $HOME
 id
 
 echo "$hr\nSSH FILES\n$hr"
-[ $HOME != /root ] && ln -s $HOME/.ssh /root/.ssh
-chmod 600 /root/.ssh/*
 ls -lL /root/.ssh
 
 echo "\n$hr\nHOME PROFILES\n$hr"
@@ -26,9 +24,8 @@ rm -rf $REPO && git clone $ORIGIN $REPO
 
 cd $REPO
 git checkout master
-git branch -D Chetabahana
-git branch -m Chetabahana
 mv README.md README_original.md
+git branch -D Chetabahana && git branch -m Chetabahana
 sed -i '0,/!.gitignore/s//!.gitignore\n!.google/' .gitignore
 cd ..
 
@@ -46,5 +43,4 @@ cd $REPO && ls -al .
 
 [ $HOME = /root ] && return
 echo "\n$hr\nPUSH REPOSITORY\n$hr"
-ln -s $HOME/.ssh/push /bin/push
-chmod +x /bin/push && push $ORIGIN
+bash $HOME/.ssh/push
