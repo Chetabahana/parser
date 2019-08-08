@@ -1,6 +1,7 @@
 steps:
 - name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
+  id: 'gcloud'
   args:
   - '-c'
   - |
@@ -9,6 +10,7 @@ steps:
         
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: 'bash'
+  id: 'docker'
   args:
   - '-c'
   - |
@@ -16,7 +18,7 @@ steps:
         $REPO_NAME $BRANCH_NAME $TAG_NAME \;
 
 substitutions:
-  _VERSION: 'v1-072315-cron'
+  _VERSION: 'v1-080940-cron'
   _INIT: .google/cloud/__init__
 
 timeout: '100s'

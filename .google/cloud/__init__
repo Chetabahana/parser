@@ -19,7 +19,7 @@ export TAG_NAME=${5}
 
 # Name of current step
 [ -f .steps ] && date +%s >> .steps|| gcloud builds \
-describe ${1} --format 'value(steps.name)' > .steps
+describe ${1} --format 'value(steps.id)' > .steps
 
 # Take the last word only
 BASENAME=$(basename $(head -n 1 .steps | cut -d ';' -f `wc -l < .steps`))
