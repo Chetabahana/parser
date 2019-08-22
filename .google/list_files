@@ -10,46 +10,66 @@ read_lines() {
             var=`echo $line | cut -d '=' -f1`; test=$(echo $var)
             if [ -z "$(test)" ];then eval export "$line";fi
         done <$1
+        if ( [[ -n "${LOCAL_TIME+set}" ]] && [[ -f /usr/share/zoneinfo/$LOCAL_TIME ]] ); then
+            cp -f /usr/share/zoneinfo/$LOCAL_TIME /etc/localtime
+        fi
     fi
 }
 
 # Create symbolic links
 file_links() {
     for f in $1/.*
-	do
-		if ( [ ! -f $2/${f##*/} ] && [ ! -d $2/${f##*/} ] && \
-		[ "${f##*/}" != "." ] && [ "${f##*/}" != ".." ] )
-		then
-			ln -s $f $2/${f##*/}
-		fi
-	done
+    do
+        if ( [ ! -f $2/${f##*/} ] && [ ! -d $2/${f##*/} ] && [ "${f##*/}" != "." ] && [ "${f##*/}" != ".." ] )
+        then
+            ln -s $f $2/${f##*/}
+        fi
+    done
 }
 
 # Running each scripts
 run_script() {
     # Linking..
-	[ $HOME != /root ] && file_links $HOME /root
-	[ -d /root/.ssh ] && chmod 600 /root/.ssh/*
+    [[ $HOME != /root ]] && file_links $HOME /root
     # Looping..
-    read_lines $HOME/.ssh/env_keys
+    [[ -f $HOME/.ssh/env_keys ]] && read_lines $HOME/.ssh/env_keys 
     # Calling..
-    echo -e "$hrd\nRUN SCRIPT:\n$1\n$hr"
-    sh $1; rm -f .io/$1;
+    [[ $1 != *"_"* ]] && TYPE=COMMON || TYPE=CUSTOM
+    echo -e "$hrd\nRUN '$TYPE' SCRIPT:\n$1\n$hr"
+    # Usage: docker run -it <image-name> bash -c "$1; bash"
+    [[ -f ${1%/*}/__init__ ]] && bash ${1%/*}/__init__ $1 || bash $1
 }
 
 # Listing script files to run
 read_files() {
-    [[ $1 == *"io/"* ]] && TYPE=CUSTOM || TYPE=COMMON
-    echo -e "\n$hrd\n$TYPE SCRIPTS\n$hrd"
+    echo -e "\n$hrd\nSCRIPT FILES\n$hrd"
     if ([ -d $1 ] && [ "$(ls -A $1)" ])
-    then
+	then
         # Listing..
         chmod -R +x $1/*
-        ls -l $1 | grep ".sh" && echo -e "\n$hr\n"
+        ls -l $1 | grep _*.sh && echo -e "\n$hr\n"
+        find $1 -type f -name "*.sh" -and -name "_*.sh" | sort | \
+		while read file; do run_script "$file"; done
         # Running..
-        find $1 -type f -name '*.sh' | sort | \
-        while read file; do run_script "$file"; done
+        find $1 -type f -name "*.sh" -and ! -name "*_*" | sort | \
+		while read file; do run_script "$file"; done
+        # Running..
+        find $1 -type f -name "*.sh" -and -name "*_.sh" | sort | \
+		while read file; do run_script "$file"; done
     else
-        echo -e "No '$TYPE' scripts to run\n$hr"	
+        echo -e "No scripts to run\n$hr"	
     fi
+}
+
+# Updating script files to run
+greb_files() {
+    # Copying..
+    [[ -f .cp ]] && return 1
+    [[ ! -d $1/.google/cloud/builders ]] && return 1
+    echo "copying files from directory $1"  >> .cp && cat .cp
+    find $1/.google/cloud/builders -maxdepth 1 -mindepth 1 -type d  | while read f
+	do 
+	    cp -frpvT .io/.google/${f##*.google/} .google/${f##*.google/}
+	    cp -frpvT $f .google/${f##*.google/}
+    done
 }

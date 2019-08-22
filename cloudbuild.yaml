@@ -1,24 +1,32 @@
 steps:
-- name: 'gcr.io/cloud-builders/gcloud'
-  entrypoint: 'bash'
-  id: 'gcloud'
-  args:
-  - '-c'
-  - |
-        bash ${_INIT} $BUILD_ID $PROJECT_ID \
-        $REPO_NAME $BRANCH_NAME $TAG_NAME \;
-        
-- name: 'gcr.io/cloud-builders/docker'
-  entrypoint: 'bash'
-  id: 'docker'
-  args:
-  - '-c'
-  - |
-        bash ${_INIT} $BUILD_ID $PROJECT_ID \
-        $REPO_NAME $BRANCH_NAME $TAG_NAME \;
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: /bin/bash
+  args: [$_INIT]
+  id: gcloud
+  env:
+  - TAG_NAME=gcloud
+    
+- name: gcr.io/cloud-builders/docker
+  entrypoint: /bin/bash
+  args: [$_INIT]
+  id: docker
+  env:
+  - TAG_NAME=docker
 
+options:
+  env:
+  - BUILD_ID=$BUILD_ID
+  - PROJECT_ID=$PROJECT_ID
+  - TAG_NAME=$TAG_NAME
+  - REPO_NAME=$REPO_NAME
+  - BRANCH_NAME=$BRANCH_NAME
+  volumes:
+  - name: outputs-volume
+    path: /builder/outputs/volume
+  
 substitutions:
-  _VERSION: 'v1-080940-cron'
-  _INIT: .google/cloud/__init__
+  _INIT: .google/cloud/builders/__init__
+  _VERSION: v1-1908220128-e7eaea63-b16d-4d9a-a8a3-5fc9a808b8c2-gcp
 
-timeout: '100s'
+tags: [mytag1, mytag2, mytag3]
+timeout: 300s
