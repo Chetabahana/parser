@@ -1,38 +1,53 @@
-title: Liquid template language
-description: Liquid is a template language and accompanying rendering engine. It is built for security, so is perfect for rendering custom templates from your users.
+id: 67
+user: eq19
+span: span-48
+title: eQuantum
+baseurl: /maps
+repository: JunctionTerms/maps
+action: JunctionTerms/JunctionTerms.github.io/actions/runs/14675549969
+description: ₠Quantum Project
 
-# Build settings
-baseurl:                /liquid # the subpath of your site, e.g. /blog/
-url:                    https://shopify.github.io # the base hostname & protocol for your site
-permalink:              pretty
+#debug:
+#  dist: false
+#  compress: true
+#  shortcodes: true
+
+lsi: false
+incremental: true
+highlighter: rouge
+plugins_dir: _plugins
+
+gist:
+  noscript: false
+
+kramdown:
+  math_engine: mathjax
+  syntax_highlighter: rouge
+
+readme_index:
+  with_frontmatter: true
+
 exclude:
-  - README.md
-  - CNAME
-  - Gemfile
-  - Gemfile.lock
-  - Gruntfile.js
-  - package.json
-  - package-lock.json
-  - node_modules
-  - vendor
-keep_files:             ["css"]
+  - LICENSE
+  - vendor/
+  - action.yml  
+  - Dockerfile
 
-# Collections
-collections:
-  basics:
-    output: true
-  tags:
-    output: true
-  filters:
-    output: true
-
-# Plugins
 plugins:
-  - jekyll-redirect-from
+  - jemoji
+  - jekyll-gist
+  - jekyll-avatar
+  - jekyll-mentions
+  - jekyll-paginate
+  - jekyll-coffeescript
+  - jekyll-readme-index
+  - jekyll-default-layout
+  - jekyll-relative-links
+  - jekyll-github-metadata
+  - jekyll-titles-from-headings
+  - jekyll-optional-front-matter
 
-# Front matter defaults
-defaults:
-  - scope:
-      path: "" # an empty string here means all files in the project
-    values:
-      layout: default
+track:
+  spin: [5, 1]
+  pinned: [maps, feed, lexer, parser, syntax, grammar, flakes, jsonix, lanyon, wiki, sitemap, wikitemplate]
+  organization: [Chetabahana, FeedMapping, GlobalZones, HybridModels, JunctionTerms, KernelPatterns, MappingSystem, NeuralSystem, ObjectModules, VirtualNetworks, WeakNegative, WeakPositive, ZeroWeak]
