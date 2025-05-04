@@ -1,53 +1,6 @@
-id: 67
-user: eq19
-span: span-48
-title: eQuantum
-baseurl: /maps
-repository: JunctionTerms/maps
-action: JunctionTerms/JunctionTerms.github.io/actions/runs/14675549969
-description: ₠Quantum Project
-
-#debug:
-#  dist: false
-#  compress: true
-#  shortcodes: true
-
-lsi: false
-incremental: true
-highlighter: rouge
-plugins_dir: _plugins
-
-gist:
-  noscript: false
-
-kramdown:
-  math_engine: mathjax
-  syntax_highlighter: rouge
-
-readme_index:
-  with_frontmatter: true
-
-exclude:
-  - LICENSE
-  - vendor/
-  - action.yml  
-  - Dockerfile
-
-plugins:
-  - jemoji
-  - jekyll-gist
-  - jekyll-avatar
-  - jekyll-mentions
-  - jekyll-paginate
-  - jekyll-coffeescript
-  - jekyll-readme-index
-  - jekyll-default-layout
-  - jekyll-relative-links
-  - jekyll-github-metadata
-  - jekyll-titles-from-headings
-  - jekyll-optional-front-matter
-
-track:
-  spin: [5, 1]
-  pinned: [maps, feed, lexer, parser, syntax, grammar, flakes, jsonix, lanyon, wiki, sitemap, wikitemplate]
-  organization: [Chetabahana, FeedMapping, GlobalZones, HybridModels, JunctionTerms, KernelPatterns, MappingSystem, NeuralSystem, ObjectModules, VirtualNetworks, WeakNegative, WeakPositive, ZeroWeak]
+{
+  "name": "JEKYLL_CONFIG",
+  "value": "id: 152\nuser: eq19\nspan: span-133\ntitle: eQuantum\nbaseurl: /grub\nrepository: WeakNegative/grub\naction: WeakNegative/ohmyzsh/actions/runs/14823939906\ndescription: eQuantum Project - Weak Negative Boson\n\n#debug:\n#  dist: false\n#  compress: true\n#  shortcodes: true\n\nlsi: false\nincremental: true\nhighlighter: rouge\nplugins_dir: _plugins\n\ngist:\n  noscript: false\n\nkramdown:\n  math_engine: mathjax\n  syntax_highlighter: rouge\n\nreadme_index:\n  with_frontmatter: true\n\nexclude:\n  - LICENSE\n  - vendor/\n  - action.yml  \n  - Dockerfile\n\nplugins:\n  - jemoji\n  - jekyll-gist\n  - jekyll-avatar\n  - jekyll-mentions\n  - jekyll-paginate\n  - jekyll-coffeescript\n  - jekyll-readme-index\n  - jekyll-default-layout\n  - jekyll-relative-links\n  - jekyll-github-metadata\n  - jekyll-titles-from-headings\n  - jekyll-optional-front-matter\n\ntrack:\n  spin: [11, 8]\n  pinned: [maps, feed, lexer, parser, syntax, grammar, ohmyzsh, grub, scrapy, screen, wpt, rufus]\n  organization: [Chetabahana, FeedMapping, GlobalZones, HybridModels, JunctionTerms, KernelPatterns, MappingSystem, NeuralSystem, ObjectModules, VirtualNetworks, WeakNegative, WeakPositive, ZeroWeak]",
+  "created_at": "2025-05-04T01:30:56Z",
+  "updated_at": "2025-05-04T18:17:04Z"
+}
