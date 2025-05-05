@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: /openoffice/sitemap_index.xml
+Sitemap: /mtkimg/sitemap_index.xml
