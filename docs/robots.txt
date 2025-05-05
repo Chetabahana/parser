@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: /ace/sitemap_index.xml
+Sitemap: /buildozer/sitemap_index.xml
