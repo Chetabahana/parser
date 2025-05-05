@@ -1,11 +1,10 @@
-id: 155
+id: 157
 user: eq19
-span: span-136
+span: span-138
 title: eQuantum
-baseurl: /wpt
-repository: WeakNegative/wpt
-action: WeakNegative/screen/actions/runs/14825375805
-description: eQuantum Project - Weak Negative Boson
+repository: WeakPositive/WeakPositive.github.io
+action: WeakNegative/slickmap/actions/runs/14828847701
+description: eQuantum Project - Weak Positive Boson
 
 #debug:
 #  dist: false
@@ -48,6 +47,6 @@ plugins:
   - jekyll-optional-front-matter
 
 track:
-  spin: [11, 11]
-  pinned: [maps, feed, lexer, parser, syntax, grammar, ohmyzsh, grub, scrapy, screen, wpt, rufus]
+  spin: [12, 0]
+  pinned: [maps, feed, lexer, parser, syntax, grammar, openoffice, mtkimg, ace, buildozer, firadisk, underscore]
   organization: [Chetabahana, FeedMapping, GlobalZones, HybridModels, JunctionTerms, KernelPatterns, MappingSystem, NeuralSystem, ObjectModules, VirtualNetworks, WeakNegative, WeakPositive, ZeroWeak]
