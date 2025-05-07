@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: /pyrate/sitemap_index.xml
+Sitemap: /lgt/sitemap_index.xml
