@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: /pysme/sitemap_index.xml
+Sitemap: /numqi/sitemap_index.xml
