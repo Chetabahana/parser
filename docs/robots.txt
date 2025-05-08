@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: /nthmc/sitemap_index.xml
+Sitemap: /algorithms/sitemap_index.xml
