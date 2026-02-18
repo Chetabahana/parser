@@ -4,13 +4,13 @@ span: span14
 title: eQuantum
 baseurl: /parser
 repository: Chetabahana/parser
-action: Chetabahana/lexer/actions/runs/16304520704
+action: Chetabahana/lexer/actions/runs/22129487444
 description: 
 
-#debug:
-#  dist: false
-#  compress: true
-#  shortcodes: true
+debug:
+  dist: false
+  compress: true
+  shortcodes: true
 
 lsi: false
 incremental: true
@@ -34,7 +34,6 @@ exclude:
   - Dockerfile
 
 plugins:
-  - jemoji
   - jekyll-gist
   - jekyll-avatar
   - jekyll-mentions
